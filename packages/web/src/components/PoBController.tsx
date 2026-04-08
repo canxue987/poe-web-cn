@@ -8,6 +8,8 @@ import PoBWindow from "./PoBWindow";
 import { SettingsButton } from "./SettingsButton";
 import { SettingsDialog } from "./SettingsDialog";
 
+import { TencentImportButton } from "./TencentImportButton";
+
 const { useTitle } = use;
 
 export default function PoBController(p: { game: keyof Games; version: string; isHead: boolean }) {
@@ -27,6 +29,9 @@ export default function PoBController(p: { game: keyof Games; version: string; i
   }: { position: "top" | "bottom" | "left" | "right"; isLandscape: boolean }) => {
     return (
       <>
+        {/* 💡 把国服导入助手放在侧边栏 */}
+        <TencentImportButton position={position} isLandscape={isLandscape} />
+        
         <SettingsButton
           position={position}
           isLandscape={isLandscape}

@@ -1,5 +1,7 @@
 import "./app.css";
 
+import "./translate"; // 强行加载汉化劫持外挂
+
 import { Auth0Provider } from "@auth0/auth0-react";
 import * as Sentry from "@sentry/react";
 import type React from "react";
@@ -28,22 +30,14 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   });
 }
 
+// 原来的代码有三个对象去连谷歌，现在全删掉，变成下面这样：
 export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Poiret+One&display=swap",
-  },
+  // 已经移除了 Google Fonts，使用系统默认字体以提升国内加载速度
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="zh-CN" translate="no" className="h-full">
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -63,6 +57,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@atty303" />
         <meta name="twitter:creator" content="@atty303" />
+        <meta name="google" content="notranslate" />
         <Meta />
         <Links />
       </head>

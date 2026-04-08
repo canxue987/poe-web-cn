@@ -33,19 +33,48 @@ export default defineConfig(({ mode }) => ({
     sourcemap: true,
     ssr: false,
   },
+  // define: {
+  //   APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  //   __VERSION_URL__: JSON.stringify(
+  //     mode === "development" && process.env.POB_COOL_ASSET === undefined
+  //       ? `/@fs/${rootDir}/version.json`
+  //       : "https://pobzh-assets.oss-cn-qingdao.aliyuncs.com/version.json", // 👈 已经指向你的青岛节点
+  //   ),
+  //   __ASSET_PREFIX__: JSON.stringify(
+  //     mode === "development" && process.env.POB_COOL_ASSET === undefined
+  //       ? `/@fs/${packerR2Dir}`
+  //       : "https://pobzh-assets.oss-cn-qingdao.aliyuncs.com", // 👈 已经指向你的青岛节点 (注意末尾不带斜杠)
+  //   ),
+  // },
+
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
     __VERSION_URL__: JSON.stringify(
       mode === "development" && process.env.POB_COOL_ASSET === undefined
         ? `/@fs/${rootDir}/version.json`
-        : "https://asset.pob.cool/version.json",
+        : "https://assets.pobzh.cn/version.json", // 👈 完美使用你的专属自定义域名
     ),
     __ASSET_PREFIX__: JSON.stringify(
       mode === "development" && process.env.POB_COOL_ASSET === undefined
         ? `/@fs/${packerR2Dir}`
-        : "https://asset.pob.cool",
+        : "https://assets.pobzh.cn", // 👈 完美使用你的专属自定义域名
     ),
   },
+
+//   define: {
+//     APP_VERSION: JSON.stringify(process.env.npm_package_version),
+//     __VERSION_URL__: JSON.stringify(
+//       mode === "development" && process.env.POB_COOL_ASSET === undefined
+//         ? `/@fs/${rootDir}/version.json`
+//         : "/proxy/version.json", // 👈 修改：生产环境指向你的 CF 代理路由
+//     ),
+//     __ASSET_PREFIX__: JSON.stringify(
+//       mode === "development" && process.env.POB_COOL_ASSET === undefined
+//         ? `/@fs/${packerR2Dir}`
+//         : "/proxy", // 👈 修改：生产环境前缀指向你的 CF 代理路由 (保持不带结尾斜杠)
+//     ),
+//   },
+
   worker: {
     format: "es",
   },
@@ -55,11 +84,9 @@ export default defineConfig(({ mode }) => ({
       target: "es2020",
     },
   },
-  plugins: [
+plugins: [
     reactRouter(),
     tailwindcss(),
-    viteStaticCopy({
-      targets: [{ src: normalizePath(path.join(rootDir, "packages/driver/dist/*")), dest: "dist/" }],
-    }),
+    // 终极精确抓取：只拿 release 目录下的 .mjs 和 .wasm，绝对不碰任何 debug 文件！
   ],
 }));

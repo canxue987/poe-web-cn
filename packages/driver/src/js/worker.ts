@@ -1,4 +1,5 @@
 /// <reference types="emscripten" />
+import "./translate";
 
 import { Zip } from "@zenfs/archives";
 import * as zenfs from "@zenfs/core";
