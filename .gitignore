@@ -9,3 +9,11 @@ build/
 r2/
 .wrangler
 .react-router/
+# 忽略具体的敏感脚本
+sync_oss.py
+
+# 忽略所有 .pyc 编译文件
+*.pyc
+
+# 忽略环境配置文件
+.env
